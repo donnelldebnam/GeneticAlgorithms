@@ -2,8 +2,13 @@ from operator import itemgetter
 from random import *
 
 
+''' Class contains mathematics models to create decision space, 
+    objective space, and finds paretal front of given dataset. '''
+
 # Creates an initial decision space to begin genetic
 # algorithm.
+
+
 def des_space():
     space = []
     for i in range(100):
@@ -98,3 +103,16 @@ def clean_pareto(pset):
         if p not in s:
             s.append(p)
     return s
+
+
+''' These will be methods associated with Genetic Operators '''
+
+# Returns offspring of two points in dataset
+def crossover(p1, p2):
+    a = round(uniform(0, 1), 1)
+    x = ((a * p1[0])) + ((1 - a) * p2[0])
+    y = ((a * p1[1])) + ((1 - a) * p2[1])
+    return [int(round(x, 0)), int(round(y, 0))]
+
+
+#def mutate(point, rate):

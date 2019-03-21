@@ -1,27 +1,25 @@
-import matplotlib.pyplot as plt
 import genalgorithmlib as ga
+from random import *
 
 
 d = ga.des_space()
 o = ga.obj_space(d)
-
 points = []
-
 for i in o:
     points.append(o[i])
 
-pset = ga.get_pareto(points)
+# Create Offspring
+for i in range(100):
 
-for p in points:
-    if p in pset:
-        plt.plot(p[0], p[1], 'bo')
-    else:
-        plt.plot(p[0], p[1], 'ro')
+    # Get random x1 and x2 pair
+    p1 = choice(list(o.keys()))
+    p2 = choice(list(o.keys()))
 
-print (pset)
+    # Cast tuple to make data indexable
+    list(p1)
+    list(p2)
 
+    # Complete genetic crossover
+    offspring = ga.crossover(p1, p2)
 
-plt.title('Objective Space for Vehicle Optimization')
-plt.xlabel('Vehicle Price')
-plt.ylabel('Vehicle Milage')
-plt.show()
+    print(offspring)

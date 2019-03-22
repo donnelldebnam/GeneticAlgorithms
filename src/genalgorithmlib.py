@@ -2,8 +2,10 @@ from operator import itemgetter
 from random import *
 
 
-''' Class contains mathematics models to create decision space, 
-    objective space, and finds paretal front of given dataset. '''
+"""
+    Class contains mathematics models to create decision space, 
+    objective space, and finds paretal front of given dataset. 
+"""
 
 
 # Creates an initial decision space to begin genetic
@@ -45,13 +47,11 @@ def get_pareto(values):
     if [x_min[0], y_min[1]] in values:
         return [x_min[0], y_min[1]]
     # Add these values to pareto set
-    pset.append(x_min)
-    pset.append(y_min)
+    pset.append(x_min), pset.append(y_min)
     # Loop through all values in pset to determine fitness of
     # this new point.
     for v in values:
-        x = v[0]
-        y = v[1]
+        x, y = v[0], v[1] # x & y of each value
         if x_min[0] <= x <= y_min[0] and x_min[1] >= y >= y_min[1]:
             possibilities.append(v)
     # Loop trough all possibilities and determine which dominate each
@@ -103,7 +103,9 @@ def clean_pareto(pset):
     return s
 
 
-''' These will be methods associated with Genetic Operators '''
+""" 
+    These will be methods associated with genetic operators 
+"""
 
 # Returns offspring of two points in dataset
 def crossover(p1, p2):

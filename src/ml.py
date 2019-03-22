@@ -27,8 +27,7 @@ for i in range(GENERATIONS):
         p2 = choice(list(o.keys()))
 
         # Cast tuple to make data indexable
-        list(p1)
-        list(p2)
+        list(p1), list(p2)
 
         # Complete genetic crossover
         offspring = ga.crossover(p1, p2)
@@ -37,8 +36,7 @@ for i in range(GENERATIONS):
         x1, x2 = offspring[0], offspring[1]
 
         # Fitness functions
-        f1 = randint(0, 100) + x1
-        f2 = randint(0, 100) + x2
+        f1, f2 = randint(0, 100) + x1, randint(0, 100) + x2
 
         # Map these decision space values to the objective space
         new_obj[(x1, x2)] = [f1, f2]

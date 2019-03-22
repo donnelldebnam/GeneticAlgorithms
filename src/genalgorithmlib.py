@@ -5,29 +5,29 @@ from random import *
 ''' Class contains mathematics models to create decision space, 
     objective space, and finds paretal front of given dataset. '''
 
+
 # Creates an initial decision space to begin genetic
 # algorithm.
-
-
-def des_space():
+def des_space(size):
+    values = []
     space = []
     for i in range(100):
-        space.append(randint(0, 20))
+        values.append(randint(0, 20))
+    for i in range(size):
+        x1 = values[randint(0, 99)]
+        x2 = values[randint(0, 19)]
+        space.append([x1, x2])
     return space
-
+    
 
 # Returns an objective space of 1000 values,
 # based on a given decision space
-def obj_space(values):
+def obj_space(decision_space):
     map = {}
-    for i in range(1000):
-        x1 = values[randint(0, 99)]
-        x2 = values[randint(0, 19)]
-        #f1 = (x1 ** 2) + (x2 ** 2)
-        #f2 = x1 + (3 * (x2 ** 2))
-        f1 = randint(0, 100)
-        f2 = randint(0, 100)
-        map[(x1, x2)] = [f1, f2]
+    for i in decision_space:
+        f1 = randint(0, 100) + i[0]
+        f2 = randint(0, 100) + i[1]
+        map[(i[0], i[1])] = [f1, f2]
     return map
 
 
@@ -47,8 +47,6 @@ def get_pareto(values):
     # Add these values to pareto set
     pset.append(x_min)
     pset.append(y_min)
-    # possibilities.append(x_min)
-    # possibilities.append(y_min)
     # Loop through all values in pset to determine fitness of
     # this new point.
     for v in values:
@@ -109,10 +107,11 @@ def clean_pareto(pset):
 
 # Returns offspring of two points in dataset
 def crossover(p1, p2):
-    a = round(uniform(0, 1), 1)
-    x = ((a * p1[0])) + ((1 - a) * p2[0])
-    y = ((a * p1[1])) + ((1 - a) * p2[1])
-    return [int(round(x, 0)), int(round(y, 0))]
+    alpha = round(uniform(0, 1), 1)
+    beta = round(uniform(0, 1), 1)
+    x = ((alpha * p1[0])) + ((1 - alpha) * p2[0])
+    y = ((beta * p1[1])) + ((1 - beta) * p2[1])
+    return [round(x, 1000), round(y, 1000)]
 
 
 #def mutate(point, rate):

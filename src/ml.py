@@ -2,47 +2,54 @@ import genalgorithmlib as ga
 import matplotlib.pyplot as plt
 from random import *
 
-# Creates decision space, size 1000 
-d = ga.des_space(1000)
-# Creates initial objective space
-o = ga.obj_space(d)
-# Plotted points will be stored here
-points = [] 
 
-GENERATIONS = 100
+''' In this class we will run our entire genetic algorithm, leveraging 
+    each of the genetic operators in order to find the pareto front of 
+    the dataset after a set amount of generations [100] '''
 
-pareto_front = []
-new_obj = {}  # will be the new objective space
+
+d = ga.des_space(100)   # Creates decision space, size 1000
+o = ga.obj_space(d)     # Creates initial objective space
+
+GENERATIONS = 100       # Number of generations 
+
+pareto_front = []       # Will store points in pareto front
+points = []             # Plotted points will be stored here
+
 
 # Solve algorithm using multiple generations
 for i in range(GENERATIONS):
 
-    new_obj.clear()
+    new_obj = {}        # Will be the new objective space
 
     # Create 100 new offspring
     for j in range(100):
 
-        # Get random x1 and x2 pair
-        p1 = choice(list(o.keys()))
-        p2 = choice(list(o.keys()))
+        # Generate new offspring
+        point = ga.new_offspring(o)
+        x1, x2 = point[0], point[1]
 
-        # Cast tuple to make data indexable
-        list(p1), list(p2)
-
-        # Complete genetic crossover
-        offspring = ga.crossover(p1, p2)
-
-        # Compute f1 and f2 of the new x1 and x2 values
-        x1, x2 = offspring[0], offspring[1]
-
-        # Fitness functions
+        # Apply fitness functions
         f1, f2 = randint(0, 100) + x1, randint(0, 100) + x2
 
-        # Map these decision space values to the objective space
-        new_obj[(x1, x2)] = [f1, f2]
+        # If x1, x2 pair is already in objective space, find new pair
+        while (point in new_obj):
+            point = ga.new_offspring(o)
+        
+        # Map this decision space point to the objective space
+        new_obj[point] = [f1, f2]
 
-    # Combine population and pareto set
-    for point in new_obj:
-        pareto_front.append(new_obj[point])
-    # Get updated pareto set
-    pareto_front = ga.get_pareto(pareto_front)
+    o = new_obj         # Use this objective space for next gen.
+    for i in o:
+        points.append(o[i])
+
+pareto_front = ga.get_pareto(points)    # Get pareto front of all points
+
+# Begin plotting points
+for p in points:
+    if p in pareto_front:
+        plt.plot(p[0], p[1], 'bo')      # If in pareto front, plot blue
+    else:
+        plt.plot(p[0], p[1], 'ro')      # Else, plot red
+
+plt.show()

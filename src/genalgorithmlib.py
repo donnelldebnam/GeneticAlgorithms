@@ -16,11 +16,15 @@ def des_space(size):
     for i in range(size):
         x1 = values[randint(0, 99)]
         x2 = values[randint(0, 19)]
+        # If pair already in decision space, create new point
+        while [x1, x2] in space:
+            x1 = values[randint(0, 99)]
+            x2 = values[randint(0, 19)]
         space.append([x1, x2])
     return space
-    
 
-# Returns an objective space of 1000 values, based 
+
+# Returns an objective space of 100 values, based
 # on a given decision space
 def obj_space(decision_space):
     map = {}
@@ -28,7 +32,7 @@ def obj_space(decision_space):
         x1, x2 = i[0], i[1]
         f1 = randint(0, 100) + x1
         f2 = randint(0, 100) + x2
-        map[(i[0], i[1])] = [f1, f2]
+        map[(x1, x2)] = [f1, f2]
     return map
 
 
@@ -103,6 +107,7 @@ def clean_pareto(pset):
 
 ''' These will be methods associated with genetic operators. '''
 
+
 # Returns offspring of two points in dataset
 def crossover(p1, p2):
     alpha = round(uniform(0, 1), 1)
@@ -112,4 +117,13 @@ def crossover(p1, p2):
     return [round(x, 1000), round(y, 1000)]
 
 
-#def mutate(point, rate):
+def new_offspring(o):
+    p1 = choice(list(o.keys()))
+    p2 = choice(list(o.keys()))
+
+    list(p1), list(p2)
+
+    offspring = crossover(p1, p2)
+    x1, x2 = offspring[0], offspring[1]
+
+    return tuple([x1, x2])

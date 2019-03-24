@@ -39,15 +39,19 @@ for i in range(GENERATIONS):
         # Map this decision space point to the objective space
         new_obj[point] = [f1, f2]
 
-    o = new_obj         # Use this objective space for next gen.
+    # This objective space should be used as basis for next gen.
+    o = new_obj
+
+    # Add all points from this objective space
     for i in o:
         points.append(o[i])
 
-pareto_front = ga.get_pareto(points)    # Get pareto front of all points
+# Using theory of exploration, we can now calculate pareto front of
+# the entire dataset of points throughout all generations.
+pareto_front = ga.get_pareto(points)
 
 # Plot pareto front
-for p in points:
-    if p in pareto_front:
+for p in pareto_front:
         plt.plot(p[0], p[1], 'bo')
 
 plt.show()

@@ -5,10 +5,10 @@ from random import *
 
 ''' In this class we will run our entire genetic algorithm, leveraging 
     each of the genetic operators in order to find the pareto front of 
-    the dataset after a set amount of generations [100] '''
+    the dataset after a set amount of generations '''
 
 
-d = ga.des_space(100)   # Creates decision space, size 1000
+d = ga.des_space(100)   # Creates decision space
 o = ga.obj_space(d)     # Creates initial objective space
 
 GENERATIONS = 100       # Number of generations 
@@ -45,11 +45,9 @@ for i in range(GENERATIONS):
 
 pareto_front = ga.get_pareto(points)    # Get pareto front of all points
 
-# Begin plotting points
+# Plot pareto front
 for p in points:
     if p in pareto_front:
-        plt.plot(p[0], p[1], 'bo')      # If in pareto front, plot blue
-    else:
-        plt.plot(p[0], p[1], 'ro')      # Else, plot red
+        plt.plot(p[0], p[1], 'bo')
 
 plt.show()

@@ -2,8 +2,8 @@ from operator import itemgetter
 from random import *
 
 
-''' Class contains mathematics models to create decision space, 
-    objective space, and finds paretal front of given dataset. '''
+''' Class contains mathematic models to create decision space, 
+    objective space, and finds pareto front of given dataset. '''
 
 
 # Creates an initial decision space to begin genetic
@@ -99,9 +99,8 @@ def update_pareto(pset):
 # Returns set without duplicates
 def clean_pareto(pset):
     s = []
-    for p in pset:
-        if p not in s:
-            s.append(p)
+    [s.append(p) for p in pset if p not in s]
+
     return s
 
 

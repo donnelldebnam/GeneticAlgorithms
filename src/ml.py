@@ -43,15 +43,13 @@ for i in range(GENERATIONS):
     o = new_obj
 
     # Add all points from this objective space
-    for i in o:
-        points.append(o[i])
+    [points.append(o[i]) for i in o]
 
 # Using theory of exploration, we can now calculate pareto front of
 # the entire dataset of points throughout all generations.
 pareto_front = ga.get_pareto(points)
 
 # Plot pareto front
-for p in pareto_front:
-        plt.plot(p[0], p[1], 'bo')
+[plt.plot(p[0], p[1], 'bo') for p in pareto_front]
 
 plt.show()
